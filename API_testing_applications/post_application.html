@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" name="fm">
+        name:<input type="text" name="name" />
+        <br><br>
+        age:<input type="number" name="age" />
+        <br><br>
+        city<input type="text" name="city" />
+        <br><br>
+        <input type="submit" value="Submit" onclick="start()" />
+    </form>
+   <script>
+    
+    function start(){
+        const name = document.fm.name.value
+        const age = document.fm.age.value
+        const city = document.fm.city.value
+
+       document.write(name,age,city)
+
+
+        data = {
+         'name':name,
+         'age':age,
+         'city':city
+    }
+
+    url = 'http://127.0.0.1:8000/create/'
+
+    fetch(url,{
+        method:'POST',
+        headers : {
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(data)
+    })
+    .then(response=>response.json())
+    .then(data=>console.log(data))
+    }
+   </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting</title>
+</head>
+<body>
+   <table>
+    <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>age</th>
+    </tr>
+    <tr>
+        <td class="tr1"></td>
+        <td class="tr1"></td>
+        <td class="tr1"></td>
+    </tr>
+    <tr>
+        <td class="tr2"></td>
+        <td class="tr2"></td>
+        <td class="tr2"></td>
+    </tr>
+   </table>
+    <script>
+        fetch('http://127.0.0.1:8000/fetching/')
+        .then(response=>{
+           return response.json()
+        })
+        .then(data=>{
+            // console.log(data[2].name)
+            var td = document.getElementsByClassName('tr1');
+            console.log(data)
+            td[0].innerHTML = data[0]['id']
+            td[1].innerHTML = data[0].name
+            td[2].innerHTML = data[0].age
+
+            td1 = document.getElementsByClassName('tr2');
+            td1[0].innerHTML = data[1].id
+            td1[1].innerHTML = data[1].name
+            td1[2].innerHTML = data[1].age
+        })
+    </script>
+</body>
+</html>
