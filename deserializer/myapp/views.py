@@ -19,4 +19,33 @@ def create(request):
             des.save()
             r = {"data":"Data Created Successfully"}
             return JsonResponse(r,content_type='application/json')
-    return JsonResponse(des.error, content_type='application/json')
+        
+    if request.method == "DELETE":
+        json_data = request.body
+        stream = io.BytesIO(json_data)
+        data = JSONParser().parse(stream)
+        id = data.get('id')
+        Table.objects.filter(id=id).delete()
+        r = {"data":"Data Deleted Successfully...."}
+        return JsonResponse(r,content_type='application/json')
+    
+    if request.method == "PUT":
+        json = request.body
+        # print(type(json))
+        s = io.BytesIO(json)
+        # print(type(s))
+        data = JSONParser().parse(s)
+        print(type(data))
+        id = data.get('id')
+        instance = Table.objects.get(pk=id)
+        des = Desrializer(instance, data = data, partial=True)
+        if des.is_valid():
+            des.save()
+            r = {'data':'Data Created'}
+            return JsonResponse(r,content_type='application/json')
+        
+    if request.method == "GET":
+        data1 = Table.objects.all()
+        a = Desrializer(data1,many=True)
+        return JsonResponse(a.data,safe=False)
+    return JsonResponse('abc', content_type='application/json')
